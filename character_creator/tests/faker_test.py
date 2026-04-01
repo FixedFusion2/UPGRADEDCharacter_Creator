@@ -59,3 +59,31 @@ if __name__ == "__main__":
     my_character = generate_character_profile()
     my_backstory = generate_backstory(my_character)
     print(my_backstory)
+
+
+
+
+fake = Faker()
+
+def generate_backstory():
+    # 1. Generate fake data points
+    name = fake.name()
+    name2 = fake.name()
+    adjective = fake.word(part_of_speech='adjective')
+    noun1 = fake.word(part_of_speech='noun')
+    # Using 'verb' usually gives base form, sometimes needs manual -ing
+    verb = fake.word(part_of_speech='verb') 
+    noun2 = fake.word(part_of_speech='noun')
+    place = fake.city()
+    
+    # 2. Define the template
+    template = (
+        f"{name} was a {adjective} {noun1}, known for {verb}ing the {noun2} "
+        f"in the city of {place}. Their life changed when they met a "
+        f"{fake.job()} named {name2}. {name2} was the one who gave {name} their power, because of this, they were {adjective}."
+    )
+    
+    return template
+
+# Generate and print a random backstory
+print(generate_backstory())

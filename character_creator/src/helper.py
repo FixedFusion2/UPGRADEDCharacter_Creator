@@ -339,4 +339,6 @@ def edit_character():
             else:
                 print("Could not find the character you typed in. Check your spelling and punctuation.")
                 continue
+
+
 menu()
