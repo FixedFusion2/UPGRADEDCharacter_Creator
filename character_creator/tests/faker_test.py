@@ -1,5 +1,5 @@
 
-from faker import Faker
+from faker import *
 import random
 
 fake = Faker('en_US')
