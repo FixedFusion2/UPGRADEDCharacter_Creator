@@ -13,12 +13,12 @@ np.random.seed(19680801)
 # Example data
 charcters = (name1, name2, name3, name4, name5)
 y_pos = np.arange(len(charcters))
-performance = 3 + 10 * np.random.rand(len(charcters))
+strength = 3 + 10 * np.random.rand(len(charcters))
 error = np.random.rand(len(charcters))
 
 fig, ax = plt.subplots()
 
-hbars = ax.barh(y_pos, performance, xerr=error, align='center')
+hbars = ax.barh(y_pos, performance, xerr=error, align='center', color = 'red')
 ax.set_yticks(y_pos, labels=charcters)
 ax.invert_yaxis()  # labels read top-to-bottom
 ax.set_xlabel('Strength', fontsize = 30)
