@@ -18,7 +18,7 @@ error = np.random.rand(len(charcters))
 
 fig, ax = plt.subplots()
 
-hbars = ax.barh(y_pos, performance, xerr=error, align='center', color = 'red')
+hbars = ax.barh(y_pos, strength, xerr=error, align='center', color = 'red')
 ax.set_yticks(y_pos, labels=charcters)
 ax.invert_yaxis()  # labels read top-to-bottom
 ax.set_xlabel('Strength', fontsize = 30)

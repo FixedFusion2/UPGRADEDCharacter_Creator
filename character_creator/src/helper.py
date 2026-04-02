@@ -111,7 +111,10 @@ def create_character():
     character["Name"] = input("Enter your character's name: ").title().strip()
     #Finish character creation
     characters.append(character)
-    type_print(f"Character created:\nName: {character['Name']}\n Class: {character['Class']}\nStats:\n Strength: {character['Stats']['Strength']}\n Health: {character['Stats']['Health']}\n Wisdom: {character['Stats']['Wisdom']}\n Dexterity: {character['Stats']['Dexterity']}\n Intelligence: {character['Stats']['Intelligence']}\nXP: {character['XP']}\nLevel: {character['Level']}\nWeapon: {character['Weapon']}\n")
+    character_guy = f"Character created:\nName: {character['Name']}\n Class: {character['Class']}\nStats:\n Strength: {character['Stats']['Strength']}\n Health: {character['Stats']['Health']}\n Wisdom: {character['Stats']['Wisdom']}\n Dexterity: {character['Stats']['Dexterity']}\n Intelligence: {character['Stats']['Intelligence']}\nXP: {character['XP']}\nLevel: {character['Level']}\nWeapon: {character['Weapon']}\n"
+    type_print(character_guy)
+    with open("character_creator\docs\characters.csv", "a") as file:
+        file.write(f"\n{character_guy}\n")
     another_character()
 
 

@@ -1,5 +1,5 @@
 
-# Name of your project
+# Upgraded RPG Character Manager
 ***
 ![Image of code while running](location of image in folders)
 Paragraph description of your project
