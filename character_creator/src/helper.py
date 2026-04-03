@@ -392,5 +392,4 @@ def generate_character():
         else:
             weapon = "Morning Star"
         print(f"Character generated:\nName: {fakename}\n Class: Cleric\nStats:\n Strength: 10\n Health: 30\n Wisdom: 20\n Dexterity: {dexterity}\n Intelligence: {intelligence}\nXP: 0\nLevel: 1\nWeapon: {weapon}\n")
-
 menu()
