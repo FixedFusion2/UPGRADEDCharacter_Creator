@@ -2,6 +2,12 @@
 import random
 import time
 import os
+from faker import *
+from pandas import *
+from matplotlib import *
+
+fake = Faker()
+
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -35,6 +41,8 @@ def menu():
         elif menu_option == "4":
             type_print("Thank you for using our character editor!\n\n\nCredits:\nTrue: Team Leader\nLizzie: Lead Programmer\nLucci: UX/UI Designer\n\n- 'Main Menu' built by Lucci\n- 'Building a Character' built by True\n- 'Character Level Up Check' built by Lucci\n- 'Finding a Character' built by Lizzie\n- 'Viewing/Editing a Character' built by Lizzie\n")
             exit()
+        elif menu_option == "5":
+            generate_character()
         else:
             print("Invalid option. Please try again.")
             continue
@@ -343,5 +351,46 @@ def edit_character():
                 print("Could not find the character you typed in. Check your spelling and punctuation.")
                 continue
 
+def generate_character():
+    print("1. Fighter")
+    print("2. Rogue")
+    print("3. Cleric")
+    gc_choice = input("Which character would you like to generate (1-3): ")
+    if gc_choice == "1":
+        fakename = fake.name()
+        dexterity = random.randint(10,30)
+        intelligence = random.randint(10,30)
+        random_weapon = random.randint(1,3)
+        if random_weapon == 1:
+            weapon = "Greatsword"
+        elif random_weapon == 2:
+            weapon = "Greataxe"
+        else:
+            weapon = "Maul"
+        print(f"Character generated:\nName: {fakename}\n Class: Fighter\nStats:\n Strength: 30\n Health: 20\n Wisdom: 10\n Dexterity: {dexterity}\n Intelligence: {intelligence}\nXP: 0\nLevel: 1\nWeapon: {weapon}\n")
+    if gc_choice == "2":
+        fakename = fake.name()
+        dexterity = random.randint(10,30)
+        intelligence = random.randint(10,30)
+        random_weapon = random.randint(1,3)
+        if random_weapon == 1:
+            weapon = "Daggers"
+        elif random_weapon == 2:
+            weapon = "Blowgun"
+        else:
+            weapon = "Knives"
+        print(f"Character generated:\nName: {fakename}\n Class: Rogue\nStats:\n Strength: 20\n Health: 20\n Wisdom: 20\n Dexterity: {dexterity}\n Intelligence: {intelligence}\nXP: 0\nLevel: 1\nWeapon: {weapon}\n")
+    if gc_choice == "3":
+        fakename = fake.name()
+        dexterity = random.randint(10,30)
+        intelligence = random.randint(10,30)
+        random_weapon = random.randint(1,3)
+        if random_weapon == 1:
+            weapon = "Mace"
+        elif random_weapon == 2:
+            weapon = "Warhammer"
+        else:
+            weapon = "Morning Star"
+        print(f"Character generated:\nName: {fakename}\n Class: Cleric\nStats:\n Strength: 10\n Health: 30\n Wisdom: 20\n Dexterity: {dexterity}\n Intelligence: {intelligence}\nXP: 0\nLevel: 1\nWeapon: {weapon}\n")
 
 menu()
