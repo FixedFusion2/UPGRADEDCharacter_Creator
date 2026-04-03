@@ -1,4 +1,4 @@
-# LD, LV, & TE First gorup Project
+# LD, LV, & TE First group Project
 import random
 import time
 import os
