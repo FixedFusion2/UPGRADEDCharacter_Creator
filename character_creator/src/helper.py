@@ -9,18 +9,21 @@ import numpy as np
 
 fake = Faker()
 
+#CSV Path so we can use the file path easier with this variable
 CSV_PATH = r"character_creator\\docs\\characters.csv"
 
-
+#Clear Screen Function
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+#Type Print Function for text
 def type_print(string, delay = 0.08):
     for char in string:
         print(char, end="", flush = True)
         time.sleep(delay)
 
 #Class Definitions
+#Character Class
 class Character:
     def __init__(self, name, c_class, stats, weapon, inventory=None, xp=0, level=1, spell_slots=0):
         self.name = name
@@ -48,7 +51,61 @@ class Character:
             xp_needed = 15 if self.Class in ["Rogue", "Fighter"] else 20
             xp_needed *= self.Level
         return leveled
+    
+    def to_dict(self):
+        return {
+            "Name": self.name,
+            "Class": self.Class,
+            "Strength": self.Stats.get("Strength", 0),
+            "Health": self.Stats.get("Health", 0),
+            "Wisdom": self.Stats.get("Wisdom", 0),
+            "Dexterity": self.Stats.get("Dexterity", 0),
+            "Intelligence": self.Stats.get("Intelligence", 0),
+            "XP": self.XP,
+            "Level": self.Level,
+            "Weapon": self.Weapon,
+            "Inventory": self.Iventory,
+            "Spell_slots": self.Spell_slots      
+          }
+#Random generation Class
+class RandomGenerator:
+    @staticmethod
+    #Random_Character Class using faker
+    def random_character(base_class=None):
+        c_class = base_class or random.choice(list(classes.keys()))
+        base = classes[c_class]
+        stats = base['Stats'].copy()
+        stats['Dexterity'] = random.randint(10,30)
+        stats['Intelligence'] = random.randint(10,30)
+        name = fake.name()
+        weapon = random.choice(base['Weapons'])
+        inventory = [fake.word().title() for _ in range(random.randint(1,3))]
+        backstory = fake.sentence(nb_words=12)
+        personality = fake.word().title()
+        return Character(name,base['Name'], stats, weapon, inventory, xp=0, level=1, spell_slots = 0), backstory, personality
 
+class DataVisualization:
+    @staticmethod
+    def radar_chart(char: Character):
+        labels = list(char.Stats.keys())
+        stats = list(char.Stats.values())
+        angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False)
+        stats = np.concatenate((stats,[stats[0]]))
+        angles = np.concatenate((angles,[angles[0]]))
+        fig, ax = plt.subplots(subplot_kw=dict(polar=True))
+        ax.plot(angles,stats, 'o-', linewidth=2)
+        ax.fill(angles, stats, aplha=0.25)
+        ax.set_thetagrids(angles * 180/np.pi, labels)
+        ax.set_title(f"{char.name}'s Stats")
+        plt.show()
+
+    @staticmethod
+    def cxomparee_characters(chars):
+        labels = list(chars[0.Stats.keys()])
+        angles= np.linspace(0,2 * np.pi, len(labels), endpoint=False)
+        fig, ax = plt.subplots(subplot_kw=dict(polar=True))
+
+        
 
 classes = { 
 1 : {"Name": "Fighter", "Weapons": ["Greatsword", "Greataxe", "Maul"], "Stats": {"Strength": 30, "Health": 20, "Wisdom": 10}},
