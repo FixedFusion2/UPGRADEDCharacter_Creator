@@ -2,11 +2,15 @@
 import random
 import time
 import os
-from faker import *
-from pandas import *
-from matplotlib import *
+from faker import Faker
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
 
 fake = Faker()
+
+CSV_PATH = r"character_creator\\docs\\characters.csv"
+
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -15,6 +19,36 @@ def type_print(string, delay = 0.08):
     for char in string:
         print(char, end="", flush = True)
         time.sleep(delay)
+
+#Class Definitions
+class Character:
+    def __init__(self, name, c_class, stats, weapon, inventory=None, xp=0, level=1, spell_slots=0):
+        self.name = name
+        self.Class = c_class
+        self.Stats = stats
+        self.Weapon = weapon
+        self.Iventory = inventory if inventory else []
+        self.XP = xp
+        self.Level = level
+        self.Spell_slots = spell_slots
+
+    def level_up(self):
+        xp_needed = 15 if self.Class in ["Rogue", "Fighter"] else 20
+        xp_needed *= self.Level
+        leveled = False
+        while self.XP >= xp_needed:
+            self.XP -= xp_needed
+            self.Lvel += 1
+            self.Stats['Strength'] += 1
+            leveled = True
+            type_print(f"{self.Name} leveled up to level {self.Level}!")
+            if self.Class == 'Cleric' and self.level % 5 == 0:
+                self.Spell_slots += 1
+                type_print(f"{self.Name} gained an extra spell slot!")
+            xp_needed = 15 if self.Class in ["Rogue", "Fighter"] else 20
+            xp_needed *= self.Level
+        return leveled
+
 
 classes = { 
 1 : {"Name": "Fighter", "Weapons": ["Greatsword", "Greataxe", "Maul"], "Stats": {"Strength": 30, "Health": 20, "Wisdom": 10}},
