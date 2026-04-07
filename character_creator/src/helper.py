@@ -148,11 +148,61 @@ classes = {
 #Load Existing Characters
 try: 
     #Bringing characters from file path.
-    df_chars = pd.read(CSV_PATH)
+    df_chars = pd.read_csv(CSV_PATH)
 except:
     def_chars = pd.DataFrame(columns=["Name","Class","Strength","Health","Wisdom","Dexterity","Intelligence","XP","Level","Weapon","Inventory","Spell_slots"])
 
 characters = []
+
+#Create Character
+def create_character():
+    name = input("Enter name: ").title()
+
+    base = classes[random.choice(list(classes.keys()))]
+
+    char = {
+        "Name": name,
+        "Class": base["Name"],
+        "Stats": base["Stats"].copy(),
+        "Weapon": random.choice(base["Weapons"]),
+        "Inventory": [],
+        "XP": 0,
+        "Level": 1
+    }
+
+    char["Stats"]["Dexterity"] = random.randint(10,30)
+    char["Stats"]["Intelligence"] = random.randint(10,30)
+
+    characters.append(char)
+    print("Character created!")
+#View Character
+def view_character():
+    if not characters:
+        print("No characters.")
+        return
+
+    for char in characters:
+        print(f"{char['Name']} (Level {char['Level']})")
+
+#Edit Character
+def edit_character():
+    name = input("Enter character name: ").title()
+
+    for char in characters:
+        if char["Name"] == name:
+            xp = int(input("Add XP: "))
+            char["XP"] += xp
+
+            stat = input("Stat to reroll: ").title()
+            if stat in char["Stats"]:
+                char["Stats"][stat] = random.randint(10,30)  # ✅ FIXED
+
+            print("Updated!")
+            return
+
+    print("Character not found")
+
+
 
 #Menu
 def menu():
@@ -176,13 +226,42 @@ def menu():
         elif menu_option == "3":
             edit_character()
         elif menu_option == "4":
-            print('View Stats Graph')
+            if characters:
+                DataVisualization.bar_char(characters[-1])
+            else:
+                print("No characters to graph.")
         elif menu_option == "5":
-            print("Compare Characters Menu")
+            if len(characters):
+                DataVisualization.compare_characters(characters)
+            else:
+                print("Need at least 2 characters.")
         elif menu_option == "6":
-            print("Generate Random Character")
+            char, _,_ = RandomGenerator.random_character()
+            characters.append({
+                "Name": char.name,
+                "Class": char.Class,
+                "Stats": char.Stats,
+                "Weapon": char.Weapon,
+                "Inventory": char.Inventory,
+                "XP": char.XP,
+                "Level": char.Level
+            })
+            print(f"Generated: {char.name}") 
         elif menu_option == "7":
-            StatisticalAnalyzer.summary(df_chars)
+            if characters:
+                df = pd.DataFrame([{
+                    "Strength": c["Stats"]["Strength"],
+                    "Health": c["Stats"]["Health"],
+                    "Wisdom": c["Stats"]["Wisdom"],
+                    "Dexterity": c["Stats"]["Dexterity"],
+                    "Intelligence": c["Stats"]["Intelligence"],
+                    "XP": c["XP"],
+                    "Level": c["Level"]
+                } for c in characters])
+
+                StatisticalAnalyzer.summary(df)  
+            else:
+                print("No Data Available")
         elif menu_option == "8":
             type_print("Exiting...")
             break
