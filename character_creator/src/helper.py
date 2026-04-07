@@ -26,6 +26,7 @@ def type_print(string, delay = 0.08):
 #Character Class
 class Character:
     def __init__(self, name, c_class, stats, weapon, inventory=None, xp=0, level=1, spell_slots=0):
+        #Defining objects
         self.name = name
         self.Class = c_class
         self.Stats = stats
@@ -36,6 +37,7 @@ class Character:
         self.Spell_slots = spell_slots
 
     def level_up(self):
+        # Check for xp
         xp_needed = 15 if self.Class in ["Rogue", "Fighter"] else 20
         xp_needed *= self.Level
         leveled = False
@@ -51,7 +53,7 @@ class Character:
             xp_needed = 15 if self.Class in ["Rogue", "Fighter"] else 20
             xp_needed *= self.Level
         return leveled
-    
+    #Dict for various charcter information
     def to_dict(self):
         return {
             "Name": self.name,
@@ -72,6 +74,7 @@ class RandomGenerator:
     @staticmethod
     #Random_Character Class using faker
     def random_character(base_class=None):
+        #Make random information for random character
         c_class = base_class or random.choice(list(classes.keys()))
         base = classes[c_class]
         stats = base['Stats'].copy()
@@ -84,6 +87,7 @@ class RandomGenerator:
         personality = fake.word().title()
         return Character(name,base['Name'], stats, weapon, inventory, xp=0, level=1, spell_slots = 0), backstory, personality
 
+#Show data with matplotlib
 class DataVisualization:
     @staticmethod
     def radar_chart(char: Character):
@@ -100,10 +104,41 @@ class DataVisualization:
         plt.show()
 
     @staticmethod
-    def cxomparee_characters(chars):
-        labels = list(chars[0.Stats.keys()])
+    #Compare Characters Function
+    def compare_characters(chars):
+        labels = list(chars[0].Stats.keys())
         angles= np.linspace(0,2 * np.pi, len(labels), endpoint=False)
         fig, ax = plt.subplots(subplot_kw=dict(polar=True))
+        for char in chars:
+            stats = list(char.Stats.values())
+            stats = np.concatenate((stats,[stats[0]]))
+            ax.plot(np.concatenate((angles,[angles[0]])), stats, label=char.Name)
+            ax.fill(np.concatenate((angles,[angles[0]])), stats, alpha=0.1)
+        ax.set_thetagrids(angles * 180/np.pi, labels)
+        ax.set_title("Character Comparison")
+        ax.legend()
+        plt.show()
+    
+    @staticmethod
+    #Show bar chart
+    def bar_char(char: Character):
+        stats = list(char.Stats.values())
+        labels = list(char.Stats.keys())
+        plt.bar(labels, stats, color='skyblue')
+        plt.title(f"{char.Name}'s Stats")
+        plt.show()
+    
+class StatisticalAnalyzer:
+    @staticmethod
+    #Summary Function
+    def summary(df: pd.DataFrame):
+        #Save various stats
+        numeric_cols = ['Strength', 'Health', 'Wisdom', 'Dexterity', 'Intelligence', 'XP', 'Level']
+        type_print("Character Stats Summary:")
+        type_print(str(df[numeric_cols].describe()))
+        return df[numeric_cols].describe()
+
+
 
         
 
