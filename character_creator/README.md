@@ -1,32 +1,33 @@
 
 # Upgraded RPG Character Manager
 ***
-![Image of code while running](location of image in folders)
-Paragraph description of your project
+This project allows you to create, generate, adn visualtion RPG characters. 
+It does through various functions and classes all called in the main menu.
+This project also uses 3 main libraries faker, panda, and matplotlib this helps the program look and work nicer.
 
 ## How to use
 ***
-1. Step by step instructions
-2. Detailing how to run your project
-3. Install Faker
-4. Install Pandas
-5. Install Matplotlib
+1. Install Faker
+2. Install Pandas
+3. Install Matplotlib
+4. Run
+5. Use Menu
+6. Exit Using Menu or Close Window
 
 ## Details on Project features
 ***
-- All key features in your repository with a detailed description
-- This list frequently will include emojis
-
-## Installation Instructions
-***
-Notes being used in this class, but if you have a full file (.exe) for your project, this is where setup instructions go.
+- Classes
+- Matplotlib
+- Pandas
+- Faker
+- Functions
+- os
+- Time
+- Numpy
 
 ## Lisence
 ***
 Anything made for school has no copyright
 
 ## Contributors
-- github usernames foa all members of the group
-
-## Contribute
-Not being used for this class. Instructions for how to submit change to the repository if it is open source.
+- FixedFusion2

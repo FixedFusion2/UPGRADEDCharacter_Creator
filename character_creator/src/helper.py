@@ -1,4 +1,4 @@
-# LD, LV, & TE First group Project
+#TE Upgraded RPG Character manager
 import random
 import time
 import os
@@ -195,7 +195,7 @@ def edit_character():
 
             stat = input("Stat to reroll: ").title()
             if stat in char["Stats"]:
-                char["Stats"][stat] = random.randint(10,30)  # ✅ FIXED
+                char["Stats"][stat] = random.randint(10,30)
 
             print("Updated!")
             return
